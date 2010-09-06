@@ -62,6 +62,7 @@ static UIPopoverManager *sharedManager;
 
 - (void)presentPopover {
 	if (targetView == nil) {
+		[self popoverControllerDidDismissPopover:self.popover];
 		return;
 	}
 	[self.popover presentPopoverFromRect:[self targetFrameWithIdent]
