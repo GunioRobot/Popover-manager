@@ -91,7 +91,8 @@ static UIPopoverManager *sharedManager;
 			duration += CHANGE_ORIENTATION_DURATION;
 		}
 	}
-
+	currentOrientation = toOrientation;
+	
 	[self performSelector:@selector(presentPopover) withObject:nil afterDelay:duration];
 }
 
