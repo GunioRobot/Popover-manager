@@ -57,14 +57,13 @@ static UIPopoverManager *sharedManager;
 }
 
 - (CGRect)targetFrameWithIdent {
-	if (targetView == nil) {
-		return CGRectZero;
-	}
-	
 	return CGRectInset(targetView.frame, -ident, -ident);
 }
 
 - (void)presentPopover {
+	if (targetView == nil) {
+		return;
+	}
 	[self.popover presentPopoverFromRect:[self targetFrameWithIdent]
 								  inView:viewForPopover
 				permittedArrowDirections:arrowDirection
