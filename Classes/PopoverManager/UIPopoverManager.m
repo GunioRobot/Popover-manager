@@ -166,6 +166,8 @@ static UIPopoverManager *sharedManager;
 		currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
 		[self setDefaults];
 	}
+	//this is a new string for review
+	int x = 0;
 	return self;
 }
 
