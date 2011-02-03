@@ -53,18 +53,26 @@ static UIPopoverManager *sharedManager;
 
 - (void)setDefaults {
 	arrowDirection = UIPopoverArrowDirectionAny;
-	ident = 0.0;
+	ident = CGSizeMake(0, 0);
 }
 
 - (CGRect)targetFrameWithIdent {
-	return CGRectInset(targetView.frame, -ident, -ident);
+	if (targetView == nil) {
+		return CGRectZero;
+	}
+	
+	//CGRect initialFrame = targetView.frame;
+	//CGRect res = CGRectOffset(CGRectInset(initialFrame, -ident.width, -ident.height), ident.width/2, ident.height/2);
+	
+	CGRect res = targetView.frame;
+	if (ident.width || ident.height) {
+		res = CGRectMake(targetView.center.x + ident.width, targetView.center.y + ident.height, 1, 1);
+	}
+	return res;
 }
 
 - (void)presentPopover {
-	if (targetView == nil) {
-		[self popoverControllerDidDismissPopover:self.popover];
-		return;
-	}
+	LOG_FUNC
 	[self.popover presentPopoverFromRect:[self targetFrameWithIdent]
 								  inView:viewForPopover
 				permittedArrowDirections:arrowDirection
@@ -91,8 +99,7 @@ static UIPopoverManager *sharedManager;
 			duration += CHANGE_ORIENTATION_DURATION;
 		}
 	}
-	currentOrientation = toOrientation;
-	
+
 	[self performSelector:@selector(presentPopover) withObject:nil afterDelay:duration];
 }
 
@@ -147,8 +154,13 @@ static UIPopoverManager *sharedManager;
 }
 
 + (void)setIndent:(float)aValue {
-	[UIPopoverManager sharedManager]->ident = aValue;
+	[UIPopoverManager sharedManager]->ident = CGSizeMake(aValue, aValue);
 }
+
++ (void)setIndentX:(float)x andY:(float)y  {
+	[UIPopoverManager sharedManager]->ident = CGSizeMake(x, y);
+}
+
 
 + (void)showControllerInPopover:(UIViewController*)aController inView:(UIView*)aView forTarget:(id<PopoverTarget>)aTargetView {
 	[UIPopoverManager showControllerInPopover:aController inView:aView forTarget:aTargetView dismissTarget:nil dismissSelector:NULL];
@@ -156,6 +168,11 @@ static UIPopoverManager *sharedManager;
 
 + (void)showControllerInPopover:(UIViewController*)aController inView:(UIView*)aView forTarget:(id<PopoverTarget>)aTargetView dismissTarget:(id)aDismissTarget dismissSelector:(SEL)aDismissSelector {
 	[[UIPopoverManager sharedManager] showControllerInPopover:aController inView:aView forTarget:aTargetView dismissTarget:aDismissTarget dismissSelector:aDismissSelector];
+}
+
++ (void) dismissPopover {
+	[[UIPopoverManager sharedManager] dismissPopover];
+	[[UIPopoverManager currentPopover].delegate popoverControllerDidDismissPopover:[UIPopoverManager currentPopover]];
 }
 
 #pragma mark -
@@ -166,8 +183,6 @@ static UIPopoverManager *sharedManager;
 		currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
 		[self setDefaults];
 	}
-	//this is a new string for review
-	int x = 0;
 	return self;
 }
 
