@@ -60,10 +60,10 @@ static UIPopoverManager *sharedManager;
 	if (targetView == nil) {
 		return CGRectZero;
 	}
-	
+
 	//CGRect initialFrame = targetView.frame;
 	//CGRect res = CGRectOffset(CGRectInset(initialFrame, -ident.width, -ident.height), ident.width/2, ident.height/2);
-	
+
 	CGRect res = targetView.frame;
 	if (ident.width || ident.height) {
 		res = CGRectMake(targetView.center.x + ident.width, targetView.center.y + ident.height, 1, 1);
@@ -105,9 +105,9 @@ static UIPopoverManager *sharedManager;
 
 - (void)addRotationObserving {
 	LOG_FUNC
-	[[NSNotificationCenter defaultCenter] addObserver:self 
+	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(orientationDidChange:)
-												 name:UIApplicationDidChangeStatusBarOrientationNotification 
+												 name:UIApplicationDidChangeStatusBarOrientationNotification
 											   object:nil];
 }
 
@@ -116,10 +116,10 @@ static UIPopoverManager *sharedManager;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)showControllerInPopover:(UIViewController*)aController 
-						 inView:(UIView*)aView 
-					  forTarget:(id<PopoverTarget>)aTargetView 
-				  dismissTarget:(id)aDismissTarget 
+- (void)showControllerInPopover:(UIViewController*)aController
+						 inView:(UIView*)aView
+					  forTarget:(id<PopoverTarget>)aTargetView
+				  dismissTarget:(id)aDismissTarget
 				dismissSelector:(SEL)aDismissSelector {
 	LOG_FUNC
 	[self dismissPopover];
@@ -198,7 +198,7 @@ static UIPopoverManager *sharedManager;
 	if ([dismissTarget respondsToSelector:dismissSelector]) {
 		[dismissTarget performSelector:dismissSelector];
 	}
-	
+
 	self.popover = nil;
 	[self setDefaults];
 }

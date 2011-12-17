@@ -66,7 +66,7 @@
 	textOut = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 100, 50)];
 	[self.view addSubview:textOut];
 	[textOut release];
-	
+
 	UIButton *showPopoverButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	[showPopoverButton setFrame:CGRectMake(0, 0, 140, 40)];
 	[showPopoverButton setTitle:@"show popover"	forState:UIControlStateNormal];
@@ -77,7 +77,7 @@
 											UIViewAutoresizingFlexibleTopMargin)];
 	[showPopoverButton addTarget:self action:@selector(showPopover:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:showPopoverButton];
-	
+
 	UIButton *showSecondPopoverButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	[showSecondPopoverButton setFrame:CGRectMake(0, 60, 200, 40)];
 	[showSecondPopoverButton setTitle:@"show second popover"	forState:UIControlStateNormal];
@@ -100,7 +100,7 @@
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-	
+
 	// Release any cached data, images, etc that aren't in use.
 }
 
